@@ -56,17 +56,15 @@ function App() {
   };
 
   return (
-    <div className="container">
-      <div className="content">
-        <div className="row">
-          {"shorter urls for days:"}
-        </div>
-        <Input onSubmit={handleSubmit} />
-        <div className="row">
-          {Object.keys(redirects).map(url => (
-            <Redirect key={url} url={url} redirect={redirects[url]} />
-          ))}
-        </div>
+    <div className="cntnr">
+      <div className="row">
+        {"short urls for days"}
+      </div>
+      <Input onSubmit={handleSubmit} />
+      <div className="row">
+        {Object.keys(redirects).map(url => (
+          <Redirect key={url} url={url} redirect={redirects[url]} />
+        ))}
       </div>
     </div>
   );
