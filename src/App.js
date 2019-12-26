@@ -1,24 +1,73 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
+
+import './app.css';
+
+const baseUrl = process.env.NODE_ENV === 'production'
+  ? 'https://bhlnk.com'
+  : 'http://localhost:8080';
+
+function Input({ onSubmit }) {
+  const [value, setValue] = useState('');
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    onSubmit(value);
+  };
+
+  const handleChange = e => {
+    setValue(e.target.value);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input className="row input" type="text" value={value} onChange={handleChange} />
+      <br />
+      <input className="row submit button" type="submit"/>
+    </form>
+  );
+}
+
+function Redirect({ url, redirect }) {
+  return (
+    <div className="redirect">
+      <a href={redirect}>{redirect}</a>{':'}
+      <br />
+      {`(${url})`}
+    </div>
+  );
+}
 
 function App() {
+  const [redirects, setRedirects] = useState({});
+
+  const handleSubmit = async url => {
+    if (redirects[url]) return;
+
+    try {
+      const redirect = await axios.put(`${baseUrl}/`, { url }).then(({ data }) => data);
+      setRedirects({
+        ...redirects,
+        [url]: redirect,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="content">
+        <div className="row">
+          {"shorter urls for days:"}
+        </div>
+        <Input onSubmit={handleSubmit} />
+        <div className="row">
+          {Object.keys(redirects).map(url => (
+            <Redirect key={url} url={url} redirect={redirects[url]} />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

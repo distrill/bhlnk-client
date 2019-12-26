@@ -1,0 +1,13 @@
+.container {
+	margin: 15% auto !important;
+	text-align: center;
+	max-width: 500px;
+}
+
+.row {
+	margin: 10px;
+}
+
+.redirect {
+	margin: 15px 0;
+}
