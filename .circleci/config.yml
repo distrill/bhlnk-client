@@ -23,7 +23,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
       - run: yarn run build
       - run: sudo apt-get update && sudo apt-get install rsync
       - run: rsync -rv -e "ssh -o StrictHostKeyChecking=no" build blink@142.93.26.159:/home/blink/blink-client --delete
