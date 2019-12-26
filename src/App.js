@@ -144,7 +144,6 @@ function App() {
     }
   };
 
-
   return (
     <Container maxWidth="sm" className={classes.container}>
       <Grid container direction="column">
