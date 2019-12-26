@@ -4,7 +4,7 @@ import axios from 'axios';
 import './app.css';
 
 const baseUrl = process.env.NODE_ENV === 'production'
-  ? 'https://bhlnk.com'
+  ? 'https://r.bhlnk.com'
   : 'http://localhost:8080';
 
 function Input({ onSubmit }) {
